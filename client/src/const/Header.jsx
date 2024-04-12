@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "boxicons";
 import NavItem from "./NavItem";
 
 const Header = () => {
+  const isUserLoggedIn = !!localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   const [open, setOpen] = useState(false);
   const navLinks = [
     {
@@ -13,10 +21,6 @@ const Header = () => {
     {
       title: "Explore",
       path: "/explore",
-    },
-    {
-      title: "Create",
-      path: "/create",
     },
   ];
   return (
@@ -30,9 +34,24 @@ const Header = () => {
         {navLinks.map((link) => (
           <NavItem item={link} key={link.title} />
         ))}
+        {isUserLoggedIn && (
+          <>
+            <NavItem item={{ title: "Create", path: "/create" }} />
+          </>
+        )}
       </div>
       <div className="sm:flex sm:items-center hidden">
-        <button>LogOut</button>
+        {isUserLoggedIn ? (
+          <>
+            <button onClick={handleLogout}>Log out</button>
+          </>
+        ) : (
+          <>
+            <Link to={"/login"}>
+              <button>Log In</button>
+            </Link>
+          </>
+        )}
       </div>
 
       {/* mobile */}
@@ -47,8 +66,23 @@ const Header = () => {
           {navLinks.map((link) => (
             <NavItem item={link} key={link.title} />
           ))}
+          {isUserLoggedIn && (
+            <>
+              <NavItem item={{ title: "Create", path: "/create" }} />
+            </>
+          )}
           <div className="flex items-center sm:hidden">
-            <button>LogOut</button>
+            {isUserLoggedIn ? (
+              <>
+                <button onClick={handleLogout}>Log out</button>
+              </>
+            ) : (
+              <>
+                <Link to={"/login"}>
+                  <button>Log In</button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

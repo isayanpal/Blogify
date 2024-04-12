@@ -10,7 +10,7 @@ const app = express();
 connectDB();
 
 // middlewares
-app.use(cors({ credentials: true, origin: "http://localhost/3000" }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 
 // routes
