@@ -20,7 +20,7 @@ const CreatePost = () => {
     data.set('summary', summary);
     data.set('content', content);
     data.set('file', files[0]);
-    // e.preventDefault();
+    e.preventDefault();
     try {
       const response = await axios.post(
         "https://blogify-xy7n.onrender.com/api/post",
