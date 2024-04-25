@@ -14,7 +14,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/users/auth/logout",
+        "https://blogify-xy7n.onrender.com/api/users/auth/logout",
         { withCredentials: true }
       );
       setUser(null);

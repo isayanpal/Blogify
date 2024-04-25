@@ -7,7 +7,7 @@ const Post = ({_id,title, summary,  imageUrl, author}) => {
     <div className="sm:w-[800px] p-2">
       <div className="post flex sm:flex-row flex-col items-center justify-around">
         <div className="img w-[300px]">
-          <img src={'http://localhost:5000/'+ imageUrl} alt="" />
+          <img src={'https://blogify-xy7n.onrender.com/'+ imageUrl} alt="" />
         </div>
         <div className="text">
           <h2 className="text-xl text-white">{title}</h2>

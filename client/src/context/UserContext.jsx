@@ -12,7 +12,7 @@ export function UserProvider({ children }) {
 
   const getUser = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/users/refetch", {
+      const res = await axios.get("https://blogify-xy7n.onrender.com/api/users/refetch", {
         withCredentials: true,
       });
       // console.log(res.data);

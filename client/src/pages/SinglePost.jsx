@@ -12,7 +12,7 @@ const SinglePost = () => {
   useEffect(() => {
     const fetchData = async ()=>{
       try {
-        const res = await axios.get(`http://localhost:5000/api/post/${id}`);
+        const res = await axios.get(`https://blogify-xy7n.onrender.com/api/post/${id}`);
         // console.log(res.data);
       setPostInfo(res.data);
       } catch (error) {
@@ -26,7 +26,7 @@ const SinglePost = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/post/${id}/delete`,
+        `https://blogify-xy7n.onrender.com/api/post/${id}/delete`,
         {
           method: "DELETE",
           headers: {
@@ -47,7 +47,7 @@ const SinglePost = () => {
 
   if (!postInfo) return "";
 
-  const imageSrc = `http://localhost:5000/${postInfo.imageUrl}`;
+  const imageSrc = `https://blogify-xy7n.onrender.com/${postInfo.imageUrl}`;
   return (
     <div className="post-page">
       <div className="sm:w-auto p-2">

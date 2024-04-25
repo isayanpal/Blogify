@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://blogify-xy7n.onrender.com/api/users/login",
         {
           email,
           password,

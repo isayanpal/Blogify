@@ -11,7 +11,7 @@ const Edit = () => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/post/'+id).then(response => {
+    fetch('https://blogify-xy7n.onrender.com/api/post/'+id).then(response => {
         response.json().then(postInfo => {
             setTitle(postInfo.title);
             setContent(postInfo.content);
@@ -30,7 +30,7 @@ async function updatePost(e) {
   if(files?.[0]) {
       data.set('file', files?.[0]);
   }
-  const response = await fetch(`http://localhost:5000/api/post/${id}`, {
+  const response = await fetch(`https://blogify-xy7n.onrender.com/api/post/${id}`, {
       method: 'PUT',
       body:data,
       credentials: 'include'

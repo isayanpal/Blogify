@@ -23,7 +23,7 @@ const CreatePost = () => {
     // e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/post",
+        "https://blogify-xy7n.onrender.com/api/post",
         data,
         {
           withCredentials: true,

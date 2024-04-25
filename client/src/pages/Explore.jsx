@@ -7,7 +7,7 @@ const Explore = () => {
   useEffect(()=>{
     const fetchPosts = async()=>{
       try {
-        const response = await axios.get('http://localhost:5000/api/post');
+        const response = await axios.get('https://blogify-xy7n.onrender.com/api/post');
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
