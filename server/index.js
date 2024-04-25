@@ -11,7 +11,7 @@ const app = express();
 connectDB();
 
 // middlewares
-app.use(cors({ credentials: true, origin: "https://blogify-v1.vercel.app/" }));
+app.use(cors({ credentials: true, origin: "https://blogify-v1.vercel.app" }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/uploads",express.static(__dirname + "/uploads"));
