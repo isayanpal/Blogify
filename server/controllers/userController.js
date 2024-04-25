@@ -4,10 +4,10 @@ const User = require("../models/userModel");
 
 // Register user
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ message: "Please enter all fields" });
     }
     // check if user already exists
@@ -22,14 +22,14 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     // create User
     const user = await User.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
     if (user) {
       return res.status(201).json({
         _id: user.id,
-        name: user.name,
+        username: user.username,
         email: user.email,
         message: "User registered",
       });
@@ -45,29 +45,27 @@ const registerUser = async (req, res) => {
 
 // Login user
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
   try {
     // check for user email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.staus(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
-    const PassOk = await bcrypt.compare(password, user.password);
+    const PassOk = await bcrypt.compare(req.body.password, user.password);
     if (!PassOk) {
-      return res.staus(401).json({ error: "Invalid password" });
+      return res.status(401).json({ error: "Invalid password" });
     }
     const token = jwt.sign(
-      {
-        userId: user._id,
-      },
+      { id: user._id, username: user.username, email: user.email },
       process.env.JWT_SECRET,
       {
-        expiresIn: "30d",
+        expiresIn: "3d",
       }
     );
-    res.json({
-      message: "Login successful",
-      token,
+    const { password, ...info } = user._doc;
+    res.cookie("token", token).status(200).json({
+      info,
+      message: "Login Successful",
     });
   } catch (error) {
     res.status(500).json({
@@ -79,10 +77,12 @@ const loginUser = async (req, res) => {
 // Get user
 const getUser = async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(201).json(users);
+    const user = await User.findById(req.params.id);
+    const { password, ...info } = user._doc;
+    res.status(200).json(info);
   } catch (error) {
-    res.status(500).json({ error: "Unable to get users" });
+    console.log(error);
+    res.status(500).json(error);
   }
 };
 
