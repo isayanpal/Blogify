@@ -1,39 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-  const fetchUsers = () => {
-    axios.get("http://localhost:5000/api/users/register").then((res) => {
-      console.log(res.data);
-    });
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         "http://localhost:5000/api/users/login",
-        { email, password }
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
       );
-      const token = response.data.token;
-      if (token) {
-        alert("Login Successful");
-        setEmail("");
-        setPassword("");
-        fetchUsers();
-        localStorage.setItem("token", token);
-        navigate("/");
-      } else {
-        // Handle scenario if token is not received
-        console.log("Token is undefined or null");
-      }
+      setUser(res.data);
+      navigate("/");
     } catch (error) {
       console.log("Login Error", error);
     }

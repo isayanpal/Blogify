@@ -3,32 +3,32 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => fetchUsers(), []);
-  const fetchUsers = () => {
-    axios.get("http://localhost:5000/api/users/register").then((res) => {
-      console.log(res.data);
-    });
-  };
+  // useEffect(() => fetchUsers(), []);
+  // const fetchUsers = () => {
+  //   axios.get("http://localhost:5000/api/users/info").then((res) => {
+  //     console.log(res.data._id);
+  //   });
+  // };
 
   const handleRegister = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/users/register", {
-        name,
+        username,
         email,
         password,
       })
       .then(() => {
         alert("Registration Successful");
-        setName("");
+        setUserName("");
         setEmail("");
         setPassword("");
-        fetchUsers();
+        // fetchUsers();
         navigate("/login");
       })
       .catch((error) => {
@@ -46,13 +46,13 @@ const Register = () => {
           onSubmit={handleRegister}
           className="flex flex-col items-center gap-[10px] sm:w-[500px] w-[350px] bg-slate-200 text-black py-10 rounded-2xl"
         >
-          <label>Name</label>
+          <label>Username</label>
           <input
             type="text"
-            placeholder="Enter name"
+            placeholder="Enter Username"
             className="p-2 rounded-md sm:w-[350px]"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
           />
           <label>Email</label>
           <input

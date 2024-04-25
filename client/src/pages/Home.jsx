@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import heroImg from "../assets/heroImg.png";
+import { UserContext } from "../context/UserContext";
 
 const Home = () => {
-  const isUserLoggedIn = !!localStorage.getItem("token");
+  const { user } = useContext(UserContext);
 
   return (
     <div className="flex flex-row items-center justify-around">
@@ -14,7 +15,7 @@ const Home = () => {
         <p className="font-semibold text-[color:var(--accent)] text-[36px]">
           Share them.
         </p>
-        {isUserLoggedIn && (
+        {user && (
           <Link to={"/create"}>
             <button className="w-[160px] h-[60px] text-center bg-[var(--primary)] rounded-[20px]">
               Get Started
